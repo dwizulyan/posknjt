@@ -2,9 +2,15 @@ const formTransaksi = document.querySelector(".form-transaksi");
 const btnTrasaksi = document.querySelector(".btn-tampil-transaksi");
 const history = document.querySelector(".history");
 const btnHistory = document.querySelector(".btn-tampil-histori");
-
 let formState = "hidden";
 let historyState = "hidden";
+
+window.addEventListener("keydown", (e) => {
+  if (e.code === "Escape") {
+    console.log("GGJj w");
+    formTransaksi.classList.add("hidden");
+  }
+});
 
 btnHistory.addEventListener("click", () => {
   if (formState === "show") {
@@ -19,7 +25,6 @@ btnHistory.addEventListener("click", () => {
     historyState = "hidden";
   }
 });
-
 btnTrasaksi.addEventListener("click", () => {
   if (historyState === "show") {
     history.classList.add("hidden");

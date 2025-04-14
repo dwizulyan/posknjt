@@ -14,6 +14,25 @@ class Db
             return $err;
         }
     }
+    function getKaryawan($connect)
+    {
+        try
+        {
+            $query = "SELECT * FROM karyawan";
+            $res = $connect->query($query);
+            $data = [];
+            while ($row = $res->fetch_assoc())
+            {
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+        catch (Exception $err)
+        {
+            return $err;
+        }
+    }
 }
 
 $db = new Db();
