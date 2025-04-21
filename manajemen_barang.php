@@ -63,8 +63,10 @@ include("./config/connection.php");
                     <h1 class="">15</h1>
                     <h1 class="">15000</h1>
                     <div class="">
-                        <button class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all display-edit">Edit</button>
-                        <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
+                        <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                            <button type="submit" class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all display-edit">Edit</button>
+                            <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
+                        </form>
                     </div>
                 </div>
 
@@ -76,17 +78,17 @@ include("./config/connection.php");
     <div class="w-full h-screen bg-[rgba(0,0,0,0.2)] absolute overflow-hidden edit-barang-page hidden left-0 top-0">
         <form class="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[30%] h-[50vh] bg-white rounded-lg border border-neutral-300 p-5">
             <div class="w-full h-screen flex flex-col gap-5 relative">
-                <h1 class="text-3xl font-bold">Edit Data Karyawan</h1>
+                <h1 class="text-3xl font-bold">Edit Data Barang</h1>
                 <div class="flex flex-col gap-1">
-                    <label>Nama Karyawan</label>
+                    <label>Barang</label>
                     <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label>Nomor Karyawan</label>
+                    <label>Harga Barang</label>
                     <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
                 </div>
                 <div class="flex flex-col gap-1">
-                    <label>Jabatan</label>
+                    <label>Stok</label>
                     <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
                 </div>
                 <div class="flex items-center gap-5">

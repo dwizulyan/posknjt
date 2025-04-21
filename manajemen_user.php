@@ -65,7 +65,9 @@ $karyawan = $db->getKaryawan($connect);
                         <h1 class="col-span-3"><?= $value["nomor_hp"] ?></h1>
                         <h1 class="col-span-3"><?= $value["jabatan"] ?></h1>
                         <div class="col-span-2">
-                            <button class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all display-edit">Edit</button>
+                            <a href="./edit_data_user.php?id=<?= $value["id"] ?>">
+                                <button class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all display-edit">Edit</button>
+                            </a>
                             <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
                         </div>
                     </div>
@@ -73,30 +75,7 @@ $karyawan = $db->getKaryawan($connect);
                 <?php endforeach; ?>
             </div>
         </div>
-        <div class="w-full h-screen bg-[rgba(0,0,0,0.2)] absolute overflow-hidden edit-karyawan-page hidden">
-            <form class="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[30%] h-[50vh] bg-white rounded-lg border border-neutral-300 p-5">
-                <div class="w-full h-screen flex flex-col gap-5 relative">
-                    <h1 class="text-3xl font-bold">Edit Data Karyawan</h1>
-                    <div class="flex flex-col gap-1">
-                        <label>Nama Karyawan</label>
-                        <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <label>Nomor Karyawan</label>
-                        <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <label>Jabatan</label>
-                        <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
-                    </div>
-                    <div class="flex items-center gap-5">
-                        <button class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all ">Edit</button>
-                        <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Batal</button>
-                    </div>
-                </div>
-                <div class="absolute right-5 top-5 rounded-full bg-neutral-900 w-[25px] h-[25px] flex items-center justify-center text-white hover:cursor-pointer hover:bg-neutral-700 transition-all close-edit">x</div>
-            </form>
-        </div>
+
         <script src="./script/manajemen_user.js"></script>
 </body>
 

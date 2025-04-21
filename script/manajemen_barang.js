@@ -7,7 +7,8 @@ closeEditButton.addEventListener("click", () => {
 });
 
 for (let gg of openEditButton) {
-  gg.addEventListener("click", () => {
+  gg.addEventListener("click", (e) => {
+    e.preventDefault();
     console.log("JJJJJJ");
     editBarangPage.classList.remove("hidden");
   });
