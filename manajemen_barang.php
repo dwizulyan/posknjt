@@ -1,10 +1,20 @@
 <?php
 include("./config/connection.php");
+include("./config/db.php");
+session_start();
+if (isset($_GET['edit']))
+{
+    $_SESSION['id'] = $_GET['id'];
+    header("Location:./edit/edit_barang.php");
+}
+$barang = $db->getBarang($connect);
+
 ?>
 <!doctype html>
 <html>
 
 <head>
+    <title>Manajemen Barang</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./src/output.css" rel="stylesheet">
@@ -17,36 +27,39 @@ include("./config/connection.php");
 
 <body>
     <div class="w-full h-screen flex bg-neutral-100">
+        <!-- Sidebar -->
         <div class="w-[20%] h-full p-5">
             <div class="w-full h-full flex rounded-lg flex-col gap-5 p-5 bg-white border border-neutral-200">
                 <a href="./outlet_identity.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Identitas Outlet</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Identitas Outlet</h1>
                 </a>
                 <a href="./manajemen_user.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Manajemen Karyawan</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Manajemen Karyawan</h1>
                 </a>
                 <a href="./manajemen_barang.php">
-                    <h1 class="text-neutral-900 bg-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Manajemen Barang</h1>
+                    <h1 class="text-white bg-neutral-900 border borrder-neutral-300 px-5 py-2 rounded-lg transition-all">Manajemen Barang</h1>
                 </a>
-
                 <a href="./transaksi_penjualan.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Transaksi</h1>
-                </a>
-                <a href="./ubah_password.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Ubah Password</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Transaksi</h1>
                 </a>
                 <a href="./laporan.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Laporan</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Laporan</h1>
                 </a>
 
                 <a href="./logout.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Logout</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Logout</h1>
                 </a>
 
             </div>
         </div>
+        <!-- Main Content -->
         <div class="w-[80%] h-full p-5 overflow-y-scroll">
-            <h1 class="text-4xl font-bold mb-5">Manajemen Barang</h1>
+            <div class="flex items-center justify-between">
+                <h1 class="text-4xl font-bold mb-5">Manajemen Barang</h1>
+                <a href="./tambah/tambah_barang.php">
+                    <button class="border border-neutral-900 text-neutral-900 px-4 py-1 hover:bg-neutral-900 hover:text-white hover:cursor-pointer transition-all rounded-lg">Tambah Data</button>
+                </a>
+            </div>
             <div class="w-full h-full bg-white rounded-lg border-neutral-300 border p-5 flex flex-col gap-2">
                 <div class="grid grid-cols-5">
                     <h1 class="font-bold">Id Barang</h1>
@@ -57,48 +70,34 @@ include("./config/connection.php");
                 </div>
 
                 <div class="w-full h-[1px] bg-neutral-300"></div>
-                <div class="grid grid-cols-5">
-                    <h1 class="">1543231</h1>
-                    <h1 class="">Burger Bangor</h1>
-                    <h1 class="">15</h1>
-                    <h1 class="">15000</h1>
-                    <div class="">
-                        <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                            <button type="submit" class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all display-edit">Edit</button>
-                            <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="w-full h-[1px] bg-neutral-300"></div>
+                <?php if (count($barang) > 0): ?>
+                    <?php foreach ($barang as $barang): ?>
+                        <div class="grid grid-cols-5">
+                            <h1 class=""><?= $barang['id'] ?></h1>
+                            <h1 class=""><?= $barang['nama_barang'] ?></h1>
+                            <h1 class=""><?= $barang["stok_barang"] ?></h1>
+                            <h1 class=""><?= $barang['harga'] ?></h1>
+                            <div class="flex gap-2 items-center">
+                                <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                    <input type="hidden" name="id" value="<?= $barang['id'] ?>">
+                                    <button type="submit" name="edit" class="px-5 py-1 rounded-lg border border-neutral-900 hover:text-white hover:bg-neutral-900 text-neutral-900 hover:cursor-pointer  transition-all display-edit">Edit</button>
+                                </form>
+                                <form action="./hapus/hapus_barang.php" method="post">
+                                    <input type="hidden" value="<?= $barang["id"] ?>" name="id">
+                                    <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="w-full h-[1px] bg-neutral-300"></div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <h1>Tidak ada barang tersedia</h1>
+                <?php endif; ?>
             </div>
         </div>
 
     </div>
-    <div class="w-full h-screen bg-[rgba(0,0,0,0.2)] absolute overflow-hidden edit-barang-page hidden left-0 top-0">
-        <form class="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[30%] h-[50vh] bg-white rounded-lg border border-neutral-300 p-5">
-            <div class="w-full h-screen flex flex-col gap-5 relative">
-                <h1 class="text-3xl font-bold">Edit Data Barang</h1>
-                <div class="flex flex-col gap-1">
-                    <label>Barang</label>
-                    <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
-                </div>
-                <div class="flex flex-col gap-1">
-                    <label>Harga Barang</label>
-                    <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
-                </div>
-                <div class="flex flex-col gap-1">
-                    <label>Stok</label>
-                    <input type="text" class="w-[100%] px-2 py-1 rounded-lg border border-neutral-300 focus:outline-none" />
-                </div>
-                <div class="flex items-center gap-5">
-                    <button class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all ">Edit</button>
-                    <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Batal</button>
-                </div>
-            </div>
-            <div class="absolute right-5 top-5 rounded-full bg-neutral-900 w-[25px] h-[25px] flex items-center justify-center text-white hover:cursor-pointer hover:bg-neutral-700 transition-all close-edit">x</div>
-        </form>
-    </div>
+
     <script src="./script/manajemen_barang.js"></script>
 </body>
 

@@ -4,12 +4,20 @@ include("./config/db.php");
 
 $karyawan = $db->getKaryawan($connect);
 
+session_start();
+if (isset($_GET["edit"]))
+{
+    $_SESSION['id'] = $_GET['id'];
+    header("Location:./edit/edit_data_user.php");
+}
+
 
 ?>
 <!doctype html>
 <html>
 
 <head>
+    <title>Manajemen User</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./src/output.css" rel="stylesheet">
@@ -20,62 +28,73 @@ $karyawan = $db->getKaryawan($connect);
 
 <body>
     <div class="w-full h-screen flex bg-neutral-100">
+        <!-- Sidebar -->
         <div class="w-[20%] h-full p-5">
             <div class="w-full h-full flex rounded-lg flex-col gap-5 p-5 bg-white border border-neutral-200">
                 <a href="./outlet_identity.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Identitas Outlet</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Identitas Outlet</h1>
                 </a>
                 <a href="./manajemen_user.php">
-                    <h1 class="text-neutral-900 bg-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Manajemen Karyawan</h1>
+                    <h1 class="text-white bg-neutral-900 border borrder-neutral-300 px-5 py-2 rounded-lg transition-all">Manajemen Karyawan</h1>
                 </a>
                 <a href="./manajemen_barang.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Manajemen Barang</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Manajemen Barang</h1>
                 </a>
                 <a href="./transaksi_penjualan.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Transaksi</h1>
-                </a>
-                <a href="./ubah_password.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Ubah Password</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Transaksi</h1>
                 </a>
                 <a href="./laporan.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Laporan</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Laporan</h1>
                 </a>
 
                 <a href="./logout.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Logout</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Logout</h1>
                 </a>
 
             </div>
         </div>
+        <!-- Main Content -->
         <div class="w-[80%] h-full p-5  overflow-y-scroll">
-            <h1 class="text-4xl font-bold mb-5">Manajemen Karyawan</h1>
+            <div class="flex justify-between items-center">
+                <h1 class="text-4xl font-bold mb-5">Manajemen Karyawan</h1>
+                <a href="./tambah/tambah_karyawan.php">
+                    <button class="border border-neutral-900 text-neutral-900 px-4 py-1 hover:bg-neutral-900 hover:text-white hover:cursor-pointer transition-all rounded-lg">Tambah Data</button>
+                </a>
+            </div>
             <div class="w-full h-full bg-white p-5 border border-neutral-300 rounded-lg flex flex-col gap-2">
                 <div class="grid grid-cols-12">
                     <h1 class="col-span-1 font-bold">Id</h1>
                     <h1 class="col-span-3 font-bold">Nama</h1>
                     <h1 class="col-span-3 font-bold">Nomor Hp</h1>
-                    <h1 class="col-span-3 font-bold">Status</h1>
+                    <h1 class="col-span-2 font-bold">Status</h1>
                     <h1 class="col-span-2 font-bold">Aksi</h1>
                 </div>
                 <div class="w-full h-[1px] bg-neutral-300"></div>
-                <?php foreach ($karyawan as $value): ?>
-                    <div class="grid grid-cols-12">
-                        <h1 class="col-span-1"><?= $value["id"] ?></h1>
-                        <h1 class="col-span-3"><?= $value["nama_karyawan"] ?></h1>
-                        <h1 class="col-span-3"><?= $value["nomor_hp"] ?></h1>
-                        <h1 class="col-span-3"><?= $value["jabatan"] ?></h1>
-                        <div class="col-span-2">
-                            <a href="./edit_data_user.php?id=<?= $value["id"] ?>">
-                                <button class="px-5 py-1 rounded-lg bg-neutral-100 text-neutral-900 hover:cursor-pointer hover:bg-neutral-200 transition-all display-edit">Edit</button>
-                            </a>
-                            <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
+                <?php if (count($karyawan) > 0): ?>
+                    <?php foreach ($karyawan as $value): ?>
+                        <div class="grid grid-cols-12">
+                            <h1 class="col-span-1"><?= $value["id"] ?></h1>
+                            <h1 class="col-span-3"><?= $value["nama_karyawan"] ?></h1>
+                            <h1 class="col-span-3"><?= $value["nomor_hp"] ?></h1>
+                            <h1 class="col-span-2"><?= $value["jabatan"] ?></h1>
+                            <div class="col-span-2 flex items-center gap-1">
+                                <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+                                    <input type="hidden" value=<?= $value['id'] ?> name="id" />
+                                    <button class="px-5 py-1 rounded-lg border border-neutral-900 transition-all display-edit hover:text-white hover:bg-neutral-900 hover:cursor-pointer" type="submit" name="edit">Edit</button>
+                                </form>
+                                <form action="./hapus/hapus_karyawan.php" method="post">
+                                    <input type="hidden" value="<?= $value["id"] ?>" name="id">
+                                    <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="w-full h-[1px] bg-neutral-300"></div>
-                <?php endforeach; ?>
+                        <div class="w-full h-[1px] bg-neutral-300"></div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <h1>Tidak ditemukan data karyawan</h1>
+                <?php endif; ?>
             </div>
         </div>
-
         <script src="./script/manajemen_user.js"></script>
 </body>
 

@@ -5,6 +5,7 @@ include("./config/connection.php");
 <html>
 
 <head>
+    <title>Transaksi</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./src/output.css" rel="stylesheet">
@@ -15,35 +16,32 @@ include("./config/connection.php");
 
 <body>
     <div class="w-full h-screen flex bg-neutral-100">
+        <!-- Sidebar -->
         <div class="w-[20%] h-full p-5">
             <div class="w-full h-full flex rounded-lg flex-col gap-5 p-5 bg-white border border-neutral-200">
                 <a href="./outlet_identity.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Identitas Outlet</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Identitas Outlet</h1>
                 </a>
                 <a href="./manajemen_user.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Manajemen Karyawan</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Manajemen Karyawan</h1>
                 </a>
                 <a href="./manajemen_barang.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Manajemen Barang</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Manajemen Barang</h1>
                 </a>
-
-
                 <a href="./transaksi_penjualan.php">
-                    <h1 class="text-neutral-900 bg-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Transaksi</h1>
-                </a>
-                <a href="./ubah_password.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Ubah Password</h1>
+                    <h1 class="text-white bg-neutral-900 border borrder-neutral-300 px-5 py-2 rounded-lg transition-all">Transaksi</h1>
                 </a>
                 <a href="./laporan.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Laporan</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Laporan</h1>
                 </a>
 
                 <a href="./logout.php">
-                    <h1 class="text-neutral-900 bg-neutral-100 px-5 py-2 rounded-lg hover:bg-neutral-300 transition-all">Logout</h1>
+                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Logout</h1>
                 </a>
 
             </div>
         </div>
+        <!-- Main Content -->
         <div class="w-[80%] h-full p-5 overflow-y-scroll">
             <h1 class="text-4xl font-bold">Transaksi Penjualan</h1>
             <div class="flex gap-2 items-center">
