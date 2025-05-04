@@ -176,6 +176,23 @@ class Db
             return $err;
         }
     }
+    function getUserLogin($connect, $username, $password)
+    {
+        try
+        {
+            $query = $connect->prepare("SELECT id,email,username,roleType FROM user where username = ? AND password = ?");
+            $query->bind_param("ss", $username, $password);
+            $query->execute();
+            $res = $query->get_result();
+            $data = $res->fetch_all(MYSQLI_ASSOC);
+
+            return $data;
+        }
+        catch (Exception $err)
+        {
+            return $err;
+        }
+    }
 }
 
 $db = new Db();

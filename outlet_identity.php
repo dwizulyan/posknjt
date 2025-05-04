@@ -1,6 +1,7 @@
 <?php
 require("./config/connection.php");
 require("./config/db.php");
+session_start();
 
 $outlet =  $db->getOutletIdentity($connect);
 
@@ -25,11 +26,11 @@ $outlet =  $db->getOutletIdentity($connect);
     <div class="w-full h-screen flex bg-neutral-100">
         <!-- Sidebar -->
         <div class="w-[20%] h-full p-5">
-            <div class="w-full h-full flex rounded-lg flex-col gap-5 p-5 bg-white border border-neutral-200">
+            <div class="w-full h-full flex rounded-lg flex-col relative gap-5 p-5 bg-white border border-neutral-200">
                 <a href="./outlet_identity.php">
                     <h1 class="text-white bg-neutral-900 border borrder-neutral-300 px-5 py-2 rounded-lg transition-all">Identitas Outlet</h1>
                 </a>
-                <a href="./manajemen_user.php">
+                <a href="./manajemen_karyawan.php">
                     <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Manajemen Karyawan</h1>
                 </a>
                 <a href="./manajemen_barang.php">
@@ -41,10 +42,13 @@ $outlet =  $db->getOutletIdentity($connect);
                 <a href="./laporan.php">
                     <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Laporan</h1>
                 </a>
-
-                <a href="./logout.php">
-                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Logout</h1>
+                <a href="./user_profile.php">
+                    <div class="px-3 py-3 w-full absolute left-0 bottom-0 rounded-bl-lg rounded-br-lg bg-neutral-950 flex items-center gap-3 cursor-pointer hover:bg-neutral-800">
+                        <div class="w-[30px] h-[30px] rounded-full bg-neutral-100"></div>
+                        <h1 class="font-bold text-sm text-neutral-100"><?= $_SESSION['username'] ?></h1>
+                    </div>
                 </a>
+
 
             </div>
         </div>

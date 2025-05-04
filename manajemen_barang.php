@@ -2,6 +2,10 @@
 include("./config/connection.php");
 include("./config/db.php");
 session_start();
+if (!isset($_SESSION['isLogin']) && $_SESSION['isLogin'] != true && !isset($_SESSION["username"]) && !isset($_SESSION['email']))
+{
+    header("Location:./login.php");
+}
 if (isset($_GET['edit']))
 {
     $_SESSION['id'] = $_GET['id'];
@@ -29,11 +33,11 @@ $barang = $db->getBarang($connect);
     <div class="w-full h-screen flex bg-neutral-100">
         <!-- Sidebar -->
         <div class="w-[20%] h-full p-5">
-            <div class="w-full h-full flex rounded-lg flex-col gap-5 p-5 bg-white border border-neutral-200">
+            <div class="w-full h-full flex rounded-lg flex-col relative gap-5 p-5 bg-white border border-neutral-200">
                 <a href="./outlet_identity.php">
                     <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Identitas Outlet</h1>
                 </a>
-                <a href="./manajemen_user.php">
+                <a href="./manajemen_karyawan.php">
                     <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Manajemen Karyawan</h1>
                 </a>
                 <a href="./manajemen_barang.php">
@@ -45,9 +49,11 @@ $barang = $db->getBarang($connect);
                 <a href="./laporan.php">
                     <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Laporan</h1>
                 </a>
-
-                <a href="./logout.php">
-                    <h1 class="text-neutral-700 border border-neutral-300 px-5 py-2 rounded-lg hover:bg-neutral-900 hover:text-white transition-all">Logout</h1>
+                <a href="./user_profile.php">
+                    <div class="px-3 py-3 w-full absolute left-0 bottom-0 rounded-bl-lg rounded-br-lg bg-neutral-950 flex items-center gap-3 cursor-pointer hover:bg-neutral-800">
+                        <div class="w-[30px] h-[30px] rounded-full bg-neutral-100"></div>
+                        <h1 class="font-bold text-sm text-neutral-100"><?= $_SESSION['username'] ?></h1>
+                    </div>
                 </a>
 
             </div>
@@ -56,9 +62,11 @@ $barang = $db->getBarang($connect);
         <div class="w-[80%] h-full p-5 overflow-y-scroll">
             <div class="flex items-center justify-between">
                 <h1 class="text-4xl font-bold mb-5">Manajemen Barang</h1>
-                <a href="./tambah/tambah_barang.php">
-                    <button class="border border-neutral-900 text-neutral-900 px-4 py-1 hover:bg-neutral-900 hover:text-white hover:cursor-pointer transition-all rounded-lg">Tambah Data</button>
-                </a>
+                <?php if ($_SESSION["role"] == "admin"): ?>
+                    <a href="./tambah/tambah_barang.php">
+                        <button class="border border-neutral-900 text-neutral-900 px-4 py-1 hover:bg-neutral-900 hover:text-white hover:cursor-pointer transition-all rounded-lg">Tambah Data</button>
+                    </a>
+                <?php endif; ?>
             </div>
             <div class="w-full h-full bg-white rounded-lg border-neutral-300 border p-5 flex flex-col gap-2">
                 <div class="grid grid-cols-5">
@@ -78,14 +86,18 @@ $barang = $db->getBarang($connect);
                             <h1 class=""><?= $barang["stok_barang"] ?></h1>
                             <h1 class=""><?= $barang['harga'] ?></h1>
                             <div class="flex gap-2 items-center">
-                                <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                                    <input type="hidden" name="id" value="<?= $barang['id'] ?>">
-                                    <button type="submit" name="edit" class="px-5 py-1 rounded-lg border border-neutral-900 hover:text-white hover:bg-neutral-900 text-neutral-900 hover:cursor-pointer  transition-all display-edit">Edit</button>
-                                </form>
-                                <form action="./hapus/hapus_barang.php" method="post">
-                                    <input type="hidden" value="<?= $barang["id"] ?>" name="id">
-                                    <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
-                                </form>
+                                <?php if ($_SESSION['role'] == "admin"): ?>
+                                    <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                        <input type="hidden" name="id" value="<?= $barang['id'] ?>">
+                                        <button type="submit" name="edit" class="px-5 py-1 rounded-lg border border-neutral-900 hover:text-white hover:bg-neutral-900 text-neutral-900 hover:cursor-pointer  transition-all display-edit">Edit</button>
+                                    </form>
+                                    <form action="./hapus/hapus_barang.php" method="post">
+                                        <input type="hidden" value="<?= $barang["id"] ?>" name="id">
+                                        <button class="px-5 py-1 rounded-lg bg-neutral-900 text-neutral-100 hover:cursor-pointer hover:bg-neutral-700 transition-all">Hapus</button>
+                                    </form>
+                                <?php else: ?>
+                                    <h1>Anda bukan admin</h1>
+                                <?php endif ?>
                             </div>
                         </div>
                         <div class="w-full h-[1px] bg-neutral-300"></div>
