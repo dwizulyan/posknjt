@@ -193,6 +193,21 @@ class Db
             return $err;
         }
     }
+    function tambahUserLogin($connect, $username, $email, $password, $role = "User")
+    {
+        try
+        {
+            $query = $connect->prepare("INSERT INTO user (username,email,password,roleType) VALUES(?,?,?,?)");
+            $query->bind_param("ssss", $username, $email, $password, $role);
+            $query->execute();
+            $query->close();
+            return 0;
+        }
+        catch (Exception $err)
+        {
+            return $err;
+        }
+    }
 }
 
 $db = new Db();

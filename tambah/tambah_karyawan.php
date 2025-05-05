@@ -11,7 +11,7 @@ if (isset($_GET["tambahkan"]))
     try
     {
         $db->tambahKaryawan($connect, $namaKaryawan, $nomorHp, $jabatan, $currTime);
-        header("Location:../manajemen_user.php");
+        header("Location:../manajemen_karyawan.php");
     }
     catch (Exception $err)
     {
