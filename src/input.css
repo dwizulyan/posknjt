@@ -4,4 +4,33 @@
     html{
         font-family:"Poppins",sans-serif;
     }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield; /* Untuk Firefox */
+    }
+    .animate-error{
+        animation: error forwards 10s;
+    }
+    @keyframes error {
+        0% {
+            right:-100%;
+        }
+        25%{
+            right: 0;
+        }
+        50%{
+           right: 0;
+        }
+        75%{
+           right:0;
+        }
+        100%{
+           right:-100%;
+        }
+    }
 }

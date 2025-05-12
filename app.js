@@ -25,6 +25,7 @@ btnHistory.addEventListener("click", () => {
     historyState = "hidden";
   }
 });
+
 btnTrasaksi.addEventListener("click", () => {
   if (historyState === "show") {
     history.classList.add("hidden");

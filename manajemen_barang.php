@@ -1,6 +1,7 @@
 <?php
 include("./config/connection.php");
 include("./config/db.php");
+include("./config/utils.php");
 session_start();
 if (!isset($_SESSION['isLogin']) && $_SESSION['isLogin'] != true && !isset($_SESSION["username"]) && !isset($_SESSION['email']))
 {
@@ -84,7 +85,7 @@ $barang = $db->getBarang($connect);
                             <h1 class=""><?= $barang['id'] ?></h1>
                             <h1 class=""><?= $barang['nama_barang'] ?></h1>
                             <h1 class=""><?= $barang["stok_barang"] ?></h1>
-                            <h1 class=""><?= $barang['harga'] ?></h1>
+                            <h1 class="">Rp<?= $utils->currencyFormat($barang['harga']) ?></h1>
                             <div class="flex gap-2 items-center">
                                 <?php if ($_SESSION['role'] == "admin"): ?>
                                     <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
